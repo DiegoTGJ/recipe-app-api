@@ -1,4 +1,3 @@
-
 from django.test import TestCase
 from django.contrib.auth import get_user_model
 from django.urls import reverse
@@ -8,14 +7,14 @@ from rest_framework import status
 from rest_framework.test import APIClient
 
 
-CREATE_USER_URL = reverse('users:create')
+CREATE_USER_URL = reverse('user:create')
 
 
 def create_user(**params):
     return get_user_model().objects.create_user(**params)
 
 
-def PublicUserApiTest(TestCase):
+def PublicUserApiTests(TestCase):
     """Test the user API (public)"""
 
     def setUp(self):
@@ -26,7 +25,7 @@ def PublicUserApiTest(TestCase):
         payload = {
             'email': 'test@test.test',
             'password': 'test',
-            'name': 'Test name'
+            'name': 'Test name',
         }
         res = self.client.post(CREATE_USER_URL, payload)
 
@@ -56,7 +55,6 @@ def PublicUserApiTest(TestCase):
             'name': 'prueba',
         }
         res = self.client.post(CREATE_USER_URL, payload)
-        print(f'holi {res}')
         self.assertEqual(res.status_code, status.HTTP_400_BAD_REQUEST)
         user_exists = get_user_model().objects.filter(
             email=payload['email']
