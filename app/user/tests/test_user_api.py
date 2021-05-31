@@ -14,17 +14,17 @@ def create_user(**params):
     return get_user_model().objects.create_user(**params)
 
 
-def PublicUserApiTests(TestCase):
+class PublicUserApiTests(TestCase):
     """Test the user API (public)"""
 
     def setUp(self):
         self.client = APIClient()
 
-    def test_create_valid_user_succes(self):
+    def test_create_valid_user_success(self):
         """Test creating user with valid payload is succesful"""
         payload = {
             'email': 'test@test.test',
-            'password': 'test',
+            'password': 'tes34324t',
             'name': 'Test name',
         }
         res = self.client.post(CREATE_USER_URL, payload)
@@ -37,9 +37,9 @@ def PublicUserApiTests(TestCase):
     def test_user_exists(self):
         """Test creating a duplicate user fails"""
         payload = {
-            'name': 'holi',
             'email': 'test@test.test',
-            'password': 'test',
+            'password': 'taddsfsdft',
+            'name': 'does fail',
         }
         create_user(**payload)
 
@@ -51,7 +51,7 @@ def PublicUserApiTests(TestCase):
         """Test that the password must be more than 5 characters"""
         payload = {
             'email': 'test@test.test',
-            'password': 'G121asd',
+            'password': '234',
             'name': 'prueba',
         }
         res = self.client.post(CREATE_USER_URL, payload)
